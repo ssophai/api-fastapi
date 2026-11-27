@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 from pydantic import BaseModel, ConfigDict, field_validator
 
 from app.planos.schemas import PlanoOut
@@ -32,5 +32,10 @@ class CadastroOut(BaseModel):
     criado_em: datetime
     plano: PlanoOut
     modalidades: list[ModalidadeOut]
-
+    ativo: bool
+    data_validade: date | None
     model_config = ConfigDict(from_attributes=True)
+
+class CadastroAtivacao(BaseModel):
+    ativo: bool
+    data_validade: date | None = None

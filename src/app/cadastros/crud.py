@@ -1,5 +1,5 @@
 import secrets
-from datetime import datetime
+from datetime import datetime, date, timedelta
 from sqlalchemy.orm import Session
 
 from app.cadastros import models, schemas
@@ -39,3 +39,22 @@ def deletar_cadastro(db: Session, cadastro_id: int):
     db.delete(cadastro)
     db.commit()
     return True
+
+def ativar_cadastro(db: Session, cadastro_id: int, dados: schemas.CadastroAtivacao):
+    cadastro = buscar_cadastro(db, cadastro_id)
+    if cadastro is None:
+        return None
+
+    hoje = date.today()
+    if dados.ativo and dados.data_validade is None:
+        vigente = cadastro.ativo and cadastro.data_validade and cadastro.data_validade >= hoje
+        inicio = cadastro.data_validade if vigente else hoje
+        nova_validade = inicio + timedelta(days=cadastro.plano.duracao_dias)
+    else:
+        nova_validade = dados.data_validade
+
+    cadastro.ativo = dados.ativo
+    cadastro.data_validade = nova_validade
+    db.commit()
+    db.refresh(cadastro)
+    return cadastro

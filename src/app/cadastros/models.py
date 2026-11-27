@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Table
+from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Table, Boolean, Date
 from sqlalchemy.orm import relationship
 from app.database import Base
 
@@ -21,6 +21,8 @@ class Cadastro(Base):
     observacoes = Column(String(500))
     protocolo = Column(String(20), unique=True, nullable=False)
     criado_em = Column(DateTime, default=datetime.now)
+    ativo = Column(Boolean, default=False, nullable=False)
+    data_validade = Column(Date)
 
     plano_id = Column(Integer, ForeignKey("planos.id"), nullable=False)
     plano = relationship("Plano")

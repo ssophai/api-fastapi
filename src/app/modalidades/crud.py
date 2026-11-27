@@ -46,3 +46,6 @@ def modalidade_em_uso(db: Session, modalidade_id: int):
         .first()
         is not None
     )
+
+def buscar_modalidade_por_nome(db: Session, nome: str):
+    return db.query(models.Modalidade).filter(models.Modalidade.nome == nome).first()

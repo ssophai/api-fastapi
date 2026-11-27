@@ -8,3 +8,4 @@ class Plano(Base):
     nome = Column(String(80), nullable=False, unique=True)
     descricao = Column(String(255))
     preco = Column(Numeric(8,2), nullable=False)
+    duracao_dias = Column(Integer, default=30, nullable=False)

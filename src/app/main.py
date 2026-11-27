@@ -9,6 +9,8 @@ from app.cadastros import models as cadastros_models
 from app.planos.router import router as planos_router
 from app.modalidades.router import router as modalidades_router
 from app.cadastros.router import router as cadastros_router
+from app.acessos import models as acessos_models
+from app.acessos.router import router as acessos_router
 
 Base.metadata.create_all(bind=engine)
 
@@ -24,6 +26,7 @@ app.add_middleware(
 app.include_router(planos_router)
 app.include_router(modalidades_router)
 app.include_router(cadastros_router)
+app.include_router(acessos_router)
 
 
 @app.get("/")

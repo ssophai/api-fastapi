@@ -36,3 +36,6 @@ def deletar_plano(db: Session, plano_id: int):
 def plano_em_uso(db: Session, plano_id: int):
     from app.cadastros import models as cadastros_models
     return db.query(cadastros_models.Cadastro).filter(cadastros_models.Cadastro.plano_id == plano_id).first() is not None
+
+def buscar_plano_por_nome(db: Session, nome: str):
+    return db.query(models.Plano).filter(models.Plano.nome == nome).first()

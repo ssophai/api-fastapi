@@ -42,3 +42,10 @@ def buscar(cadastro_id: int, db: Session = Depends(get_db)):
 def deletar(cadastro_id: int, db: Session = Depends(get_db)):
     if not crud.deletar_cadastro(db, cadastro_id):
         raise HTTPException(status_code=404, detail="Cadastro não encontrado")
+
+@router.patch("/{cadastro_id}/ativacao", response_model=schemas.CadastroOut)
+def ativar(cadastro_id: int, dados: schemas.CadastroAtivacao, db: Session = Depends(get_db)):
+    cadastro = crud.ativar_cadastro(db, cadastro_id, dados)
+    if cadastro is None:
+        raise HTTPException(status_code=404, detail="Cadastro não encontrado")
+    return cadastro
